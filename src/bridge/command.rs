@@ -58,10 +58,19 @@ fn create_platform_shell_command(command: &str, args: &[&str]) -> Option<StdComm
     } else if cfg!(target_os = "macos") {
         let shell = env::var("SHELL").unwrap_or_else(|_| "/bin/sh".to_string());
         let mut result = StdCommand::new(&shell);
+        let mut n_command = command;
 
-        result.args(&["-lc"]);
-        result.arg(format!("{} {}", command, args.join(" ")));
+        if shell.ends_with("nu") && n_command == "which" {
+            n_command = "^which"
+        }
 
+        let mut shell_args = "-lc";
+        if shell.ends_with("nu") {
+            shell_args = "-c"
+        }
+
+        result.args(&[shell_args]);
+        result.arg(format!("{} {}", n_command, args.join(" ")));
         Some(result)
     } else {
         None
@@ -113,8 +122,12 @@ fn build_nvim_cmd_with_args(bin: &str) -> TokioCommand {
         cmd
     } else if cfg!(target_os = "macos") {
         let shell = env::var("SHELL").unwrap();
+        let mut shell_args = "-lc";
+        if shell.ends_with("nu") {
+            shell_args = "-c"
+        }
         let mut cmd = TokioCommand::new(shell);
-        cmd.args(&["-lc", &format!("{} {}", bin, args_str)]);
+        cmd.args(&[shell_args, &format!("{} {}", bin, args_str)]);
         cmd
     } else {
         let mut cmd = TokioCommand::new(bin);
