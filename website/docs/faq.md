@@ -24,6 +24,12 @@ discouraged and try to document it ourselves:
 
 By the way, the default font used is Fira Code at size 14.
 
+## How To Enable Scrolling Animations and Transparency?
+
+First, [enable multigrid](command-line-reference.md#multigrid), it's not enabled by default.
+
+Then, scrolling animations should work, for transparency see the section below.
+
 ## How To Enable Floating And Popupmenu Transparency?
 
 Those are controlled through the `winblend` and `pumblend` options. See their help pages for more,
@@ -94,3 +100,13 @@ shell doesn't read its resource file (`~/.bashrc`/`~/.zshrc`/whatever the
 equivalent for your shell is). But depending on your shell there are other
 options for doing so, for example for zsh you can just put your relevant content
 into `~/.zprofile`.
+
+## The Terminal Displays Fallback Colors/:terminal Does Not Show My Colors
+
+Your colorscheme has to define `g:terminal_color_0` through
+`g:terminal_color_15` in order to have any effect on the terminal. Just setting
+any random highlights which have `Term` in name won't help.
+
+Some colorschemes think of this, some don't. Search in the documentation of
+yours, if it's your own, add it, and if you can't seem to find anything, open an
+issue in the colorscheme's repo.
