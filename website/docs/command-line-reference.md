@@ -59,7 +59,7 @@ containing trace events which may help debug an issue.
 ### Maximized
 
 ```sh
---maximized
+--maximized or $NEOVIDE_MAXIMIZED
 ```
 
 Maximize the window on startup, while still having decorations and the status bar of your OS
@@ -92,7 +92,7 @@ leaking it, be "blocking" and have the shell directly as parent process.
 ### No Idle
 
 ```sh
---noidle
+--noidle or $NEOVIDE_NO_IDLE
 ```
 
 Instead of skipping some frames in order to match `g:neovide_refresh_rate`, render every possible
@@ -101,7 +101,7 @@ one.
 ### No sRGB
 
 ```sh
---nosrgb
+--nosrgb or $NEOVIDE_NO_SRGB
 ```
 
 Don't request sRGB on the window. Swapping sometimes fixes startup issues.
@@ -118,6 +118,14 @@ buffers.
 
 Note: Even if files are opened in tabs, they're buffers anyways. It's just about them being visible
 or not.
+
+## No VSync
+
+```sh
+--novsync
+```
+
+By default, Neovide requests to use VSync on the created window. This option disables this behavior.
 
 ### Remote TCP
 
@@ -138,7 +146,7 @@ Runs neovim from inside wsl rather than as a normal executable.
 ### Neovim Binary
 
 ```sh
---neovim-bin
+--neovim-bin or $NEOVIM_BIN
 ```
 
 Sets where to find neovim's executable. If unset, neovide will try to find `nvim` on the `PATH`
